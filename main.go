@@ -27,6 +27,12 @@ func init() {
 func main() {
 	r := gin.Default()
 
+	r.GET("/", func(ctx *gin.Context) {
+		ctx.JSON(400, gin.H{
+			"mssg": "server end point",
+		})
+	})
+
 	// authentication
 	r.POST("/api/auth/register", AuthController.SignUpUser)
 	r.POST("/api/auth/login", AuthController.LoginUser)
