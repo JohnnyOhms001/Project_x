@@ -17,16 +17,18 @@ var (
 )
 
 func init() {
-	err := config.Loadenv()
-	if err != nil {
-		fmt.Println("Failed to load environment variables:", err)
-	}
 	config.ConnectToDB()
 	config.SyncDB()
 }
-
 func main() {
 	r := gin.Default()
+	if err := config.Loadenv(); err != nil {
+		if !os.IsNotExist(err) {
+			fmt.Println("Failed to load environment variables:", err)
+		} else {
+			fmt.Println(".env file not found, using default values for environment variables.")
+		}
+	}
 
 	r.GET("/", func(ctx *gin.Context) {
 		ctx.JSON(200, gin.H{
