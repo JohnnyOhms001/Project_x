@@ -17,7 +17,8 @@ var (
 )
 
 func init() {
-	if err := config.Loadenv(); err != nil {
+	err := config.Loadenv()
+	if err != nil {
 		fmt.Println("Failed to load environment variables:", err)
 	}
 	config.ConnectToDB()
