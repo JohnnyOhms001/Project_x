@@ -17,14 +17,7 @@ var (
 )
 
 func init() {
-	if err := config.Loadenv(); err != nil {
-		if !os.IsNotExist(err) {
-			fmt.Println("Failed to load environment variables:", err)
-		} else {
-			fmt.Println(".env file not found, using default values for environment variables.")
-		}
-	}
-
+	// config.Loadenv()
 	config.ConnectToDB()
 	config.SyncDB()
 }
