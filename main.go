@@ -28,12 +28,12 @@ func main() {
 	r := gin.Default()
 
 	r.GET("/", func(ctx *gin.Context) {
-		ctx.JSON(400, gin.H{
-			"mssg": "server end point",
+		ctx.JSON(200, gin.H{
+			"message": "Welcome to the server endpoint",
 		})
 	})
 
-	// authentication
+	// Authentication
 	r.POST("/api/auth/register", AuthController.SignUpUser)
 	r.POST("/api/auth/login", AuthController.LoginUser)
 
@@ -41,11 +41,11 @@ func main() {
 	r.GET("/api/getinfo", AuthController.ReteriveUserDetails)
 	r.POST("/api/setinfo", AuthController.SetUserDetails)
 
-	// user image
+	// User image
 	r.POST("/api/upload", AuthController.UploadAvatar)
 	r.GET("/api/upload", middleware.Authorization, AuthController.RetrieveAvatar)
 
-	// discord auth
+	// Discord auth
 	r.GET("/api/auth/discord/redirect", AuthController.DiscordAuth)
 
 	// Create the "avatar" directory if it doesn't exist
@@ -63,5 +63,8 @@ func main() {
 		fmt.Println("Using PORT:", port)
 	}
 
-	r.Run(":" + port)
+	// Run the server
+	if err := r.Run(":" + port); err != nil {
+		fmt.Println("Error running server:", err)
+	}
 }
